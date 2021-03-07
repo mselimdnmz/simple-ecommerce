@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Build.Framework.XamlTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Simple.Core.Model.Entity
 {
-   public class Product
+   public class Product:EntityBase
     {
         public string Name { get; set; }
         public int CategoryId { get; set; }
-        //public Category Category { get; set; }
+        public Category Category { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
         public string ImageUrl { get; set; }
