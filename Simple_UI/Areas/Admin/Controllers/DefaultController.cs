@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Simple_UI.Areas.Admin.Controllers
 {
-    public class DefaultController : Controller
+    public class DefaultController : AdminControllerBase
     {
         // GET: Admin/Default
         public ActionResult Index()
