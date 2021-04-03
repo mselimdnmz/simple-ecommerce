@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Core.Model.Entity
 {
-   public class UserAddress:EntityBase
+    public class UserAddress : EntityBase
     {
         public int UserId { get; set; }
         public User User { get; set; }

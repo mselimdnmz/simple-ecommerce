@@ -1,4 +1,4 @@
-﻿namespace Simple.Core.Model.Migrations
+namespace Simple.Core.Model.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -119,10 +119,25 @@
                         UpdateUserId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Status", t => t.StatusId)
                 .ForeignKey("dbo.Users", t => t.UserId)
                 .ForeignKey("dbo.UserAddresses", t => t.UserAddressId)
                 .Index(t => t.UserId)
-                .Index(t => t.UserAddressId);
+                .Index(t => t.UserAddressId)
+                .Index(t => t.StatusId);
+            
+            CreateTable(
+                "dbo.Status",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        CreateDate = c.DateTime(nullable: false),
+                        CreateUserId = c.Int(nullable: false),
+                        UpdateDate = c.DateTime(),
+                        UpdateUserId = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Users",
@@ -163,19 +178,6 @@
                 .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId);
             
-            CreateTable(
-                "dbo.Status",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        CreateDate = c.DateTime(nullable: false),
-                        CreateUserId = c.Int(nullable: false),
-                        UpdateDate = c.DateTime(),
-                        UpdateUserId = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
         }
         
         public override void Down()
@@ -183,12 +185,14 @@
             DropForeignKey("dbo.Orders", "UserAddressId", "dbo.UserAddresses");
             DropForeignKey("dbo.UserAddresses", "UserId", "dbo.Users");
             DropForeignKey("dbo.Orders", "UserId", "dbo.Users");
+            DropForeignKey("dbo.Orders", "StatusId", "dbo.Status");
             DropForeignKey("dbo.OrderProducts", "OrderId", "dbo.Orders");
             DropForeignKey("dbo.OrderPayments", "OrderId", "dbo.Orders");
             DropForeignKey("dbo.OrderProducts", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Baskets", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
             DropIndex("dbo.UserAddresses", new[] { "UserId" });
+            DropIndex("dbo.Orders", new[] { "StatusId" });
             DropIndex("dbo.Orders", new[] { "UserAddressId" });
             DropIndex("dbo.Orders", new[] { "UserId" });
             DropIndex("dbo.OrderProducts", new[] { "ProductId" });
@@ -196,9 +200,9 @@
             DropIndex("dbo.OrderPayments", new[] { "OrderId" });
             DropIndex("dbo.Products", new[] { "CategoryId" });
             DropIndex("dbo.Baskets", new[] { "ProductId" });
-            DropTable("dbo.Status");
             DropTable("dbo.UserAddresses");
             DropTable("dbo.Users");
+            DropTable("dbo.Status");
             DropTable("dbo.Orders");
             DropTable("dbo.OrderProducts");
             DropTable("dbo.OrderPayments");

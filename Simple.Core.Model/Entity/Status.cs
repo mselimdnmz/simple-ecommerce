@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Core.Model.Entity
 {
-   public class Status:EntityBase
+   public class Status : EntityBase
     {
         public string Name { get; set; }
     }

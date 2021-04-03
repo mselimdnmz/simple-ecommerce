@@ -1,0 +1,63 @@
+﻿@model Simple.Core.Model.Entity.Order
+@{
+    ViewBag.Title = "Sipariş Detayı";
+}
+
+<h2>@Model.Id Nolu Siparişlerinizin Durumu : @Model.Status.Name</h2>
+<hr />
+<b>Banka Bilgileri</b>
+<table>
+    <tr>
+        <td>Banka</td>
+        <td>Banka İsmi</td>
+    </tr>
+    <tr>
+        <td>İban</td>
+        <td>TR 100365842510258765213645821021</td>
+    </tr>
+    <tr>
+        <td>Alıcı Adı</td>
+        <td>Firma Bilgileri</td>
+    </tr>
+</table>
+@{
+    if (Model.StatusId == 2)
+    {
+        <a href="/Order/Pay?id=@Model.Id" class="btn btn-success">Ödeme Yaptım</a>
+    }
+}
+<hr />
+<b>Sipariş Bilgileri</b>
+<table>
+    <tr>
+        <td>Toplam</td>
+        <td>@Model.TotalPrice.ToString("##,## ₺")</td>
+    </tr>
+    <tr>
+        <td>Ürünler Toplamı</td>
+        <td>@Model.TotalProductPrice.ToString("##,## ₺")</td>
+    </tr>
+    <tr>
+        <td>İndirim Toplamı</td>
+        <td>@Model.TotalDiscount.ToString("##,## ₺")</td>
+    </tr>
+    <tr>
+        <td>Vergi Toplamı</td>
+        <td>@Model.TotalTaxPrice.ToString("##,## ₺")</td>
+    </tr>
+</table>
+<hr />
+<table>
+    <tr>
+        <td>Ürünler</td>
+        <td>Adet</td>
+    </tr>
+    @foreach (var item in Model.OrderProducts)
+    {
+        var p = new Simple.Core.Model.SimpleDB().Products.Where(x => x.Id == item.ProductId).FirstOrDefault();
+        <tr>
+            <td>@item.Product.Name</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+</table>

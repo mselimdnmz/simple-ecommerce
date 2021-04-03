@@ -15,7 +15,7 @@ namespace Simple_UI.Controllers
         {
             var db = new SimpleDB();
             var prod = db.Products.Where(x => x.Id == id).FirstOrDefault();
-            return View();
+            return View(prod);
         }
     }
 }

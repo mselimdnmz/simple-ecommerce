@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Core.Model.Entity
 {
-    public class User:EntityBase
+    public class User : EntityBase
     {
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -17,6 +17,6 @@ namespace Simple.Core.Model.Entity
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
 
-        public virtual IEnumerable<UserAddress> UserAddresses { get; set; }
+        public virtual IEnumerable<UserAddress> UserAddress { get; set; }
     }
 }
